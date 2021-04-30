@@ -1,4 +1,5 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class HowToUse extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "How To Use"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 

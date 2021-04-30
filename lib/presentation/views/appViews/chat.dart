@@ -1,4 +1,5 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/customNotificationTile.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class MessagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "Messages"),
+      drawer: AppDrawer(),
       body: _getUI(context),
     );
   }

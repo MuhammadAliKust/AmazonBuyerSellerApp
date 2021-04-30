@@ -1,3 +1,5 @@
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appHeading.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
@@ -52,15 +54,26 @@ class LoginView extends StatelessWidget {
           Align(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Text(
-                "Forgot Password?",
-                style: Theme.of(context).textTheme.caption,
+              child: InkWell(
+                onTap: () {
+                  NavigationHelper.pushReplacementName(
+                      context, Routes.FORGOT_PASSWORD_ROUTE, "");
+                },
+                child: Text(
+                  "Forgot Password?",
+                  style: Theme.of(context).textTheme.caption,
+                ),
               ),
             ),
             alignment: Alignment.centerRight,
           ),
           VerticalSpace(25),
-          AppButton(text: "Login", onPressed: () {}),
+          AppButton(
+              text: "Login",
+              onPressed: () {
+                NavigationHelper.pushReplacementName(
+                    context, Routes.DASHBOARD_ROUTE, "");
+              }),
           ToggleView(true)
         ],
       ),

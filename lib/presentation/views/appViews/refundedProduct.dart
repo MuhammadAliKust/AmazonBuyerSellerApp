@@ -1,4 +1,5 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/getProductImage.dart';
 import 'package:amazon_sale_app/presentation/elements/getReviewSS.dart';
@@ -15,6 +16,7 @@ class RefundedProduct extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "Refunded Product"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 

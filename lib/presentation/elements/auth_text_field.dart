@@ -28,6 +28,7 @@ class AuthTextField extends StatelessWidget {
         controller: controller,
         validator: validator,
         cursorColor: FrontEndConfigs.appBaseColor,
+        style: TextStyle(color: FrontEndConfigs.appBaseColor),
         decoration: InputDecoration(
           suffixIcon: icon != null
               ? Icon(
@@ -37,7 +38,7 @@ class AuthTextField extends StatelessWidget {
                 )
               : null,
           hintText: label,
-          hintStyle: TextStyle(color: FrontEndConfigs.appBaseColor),
+          hintStyle: TextStyle(color: Colors.grey),
           focusedBorder: authTextFieldBorder,
           enabledBorder:
               OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),

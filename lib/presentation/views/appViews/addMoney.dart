@@ -1,3 +1,5 @@
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
@@ -5,7 +7,7 @@ import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/textFieldLable.dart';
 import 'package:flutter/material.dart';
-
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 class AddMoney extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   @override
@@ -13,6 +15,7 @@ class AddMoney extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "Add Money"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 
@@ -60,7 +63,12 @@ class AddMoney extends StatelessWidget {
           isRequireLessPadding: true,
         ),
         VerticalSpace(37),
-        AppButton(text: "Submit", onPressed: () {})
+        AppButton(
+            text: "Submit",
+            onPressed: () {
+              NavigationHelper.pushReplacementName(
+                  context, Routes.MY_PRODUCTS_ROUTE, "");
+            })
       ],
     );
   }

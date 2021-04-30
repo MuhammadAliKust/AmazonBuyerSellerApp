@@ -1,4 +1,5 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/customNotificationTile.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "Notifications"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 

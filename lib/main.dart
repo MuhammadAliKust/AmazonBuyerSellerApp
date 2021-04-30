@@ -1,5 +1,6 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/refundedProduct.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
+import 'package:amazon_sale_app/navigation/route_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primaryColor: FrontEndConfigs.appBaseColor,
       ),
-      home: RefundedProduct(),
+      initialRoute: Routes.LOGIN_ROUTE,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/getProductImage.dart';
@@ -16,6 +17,7 @@ class SubmittedScreenShotFromBuyer extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "Product"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 

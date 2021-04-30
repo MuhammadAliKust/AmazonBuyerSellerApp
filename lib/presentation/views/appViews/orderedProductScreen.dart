@@ -1,4 +1,7 @@
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/getProductImage.dart';
@@ -12,9 +15,9 @@ class OrderedProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: "Product"),
-      body: _getUI(context),
-    );
+        appBar: customAppBar(context, title: "Product"),
+        body: _getUI(context),
+        drawer: AppDrawer());
   }
 
   Widget _getUI(BuildContext context) {
@@ -50,9 +53,19 @@ class OrderedProductScreen extends StatelessWidget {
           ),
         ),
         VerticalSpace(40),
-        AppButton(text: "Submit Review", onPressed: () {}),
+        AppButton(
+            text: "Submit Review",
+            onPressed: () {
+              NavigationHelper.pushReplacementName(
+                  context, Routes.SUBMIT_REVIEW_ROUTE, "");
+            }),
         VerticalSpace(15),
-        AppButton(text: "Submit", onPressed: () {}),
+        AppButton(
+            text: "Submit",
+            onPressed: () {
+              NavigationHelper.pushReplacementName(
+                  context, Routes.MY_PRODUCTS_ROUTE, "");
+            }),
       ],
     );
   }

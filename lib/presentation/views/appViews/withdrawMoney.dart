@@ -1,5 +1,8 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
@@ -15,6 +18,7 @@ class WithdrawMoney extends StatelessWidget {
     return Scaffold(
       appBar: customAppBar(context, title: "Withdraw Money"),
       body: _getUI(context),
+      drawer: AppDrawer(),
     );
   }
 
@@ -51,7 +55,12 @@ class WithdrawMoney extends StatelessWidget {
           isRequireLessPadding: true,
         ),
         VerticalSpace(37),
-        AppButton(text: "Submit", onPressed: () {})
+        AppButton(
+            text: "Submit",
+            onPressed: () {
+              NavigationHelper.pushReplacementName(
+                  context, Routes.MY_PRODUCTS_ROUTE, "");
+            })
       ],
     );
   }

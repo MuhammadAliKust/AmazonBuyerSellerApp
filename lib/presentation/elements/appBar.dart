@@ -7,11 +7,13 @@ Widget customAppBar(
   return AppBar(
     title: Text(title),
     centerTitle: true,
-    leading: IconButton(
-      icon: Icon(
-        Icons.menu,
-        color: Colors.white,
-      ),
+    leading: Builder(
+      builder: (context) {
+        return IconButton(
+          onPressed: () => Scaffold.of(context).openDrawer(),
+          icon: Icon(Icons.menu, size: 28, color: Colors.white),
+        );
+      },
     ),
     actions: [
       Center(

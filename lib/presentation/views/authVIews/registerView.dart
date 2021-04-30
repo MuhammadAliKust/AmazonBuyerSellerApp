@@ -1,4 +1,6 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appHeading.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
@@ -141,7 +143,12 @@ class _RegisterViewState extends State<RegisterView> {
           VerticalSpace(17),
           _getRadioButtonRow(),
           VerticalSpace(24),
-          AppButton(text: "Register", onPressed: () {}),
+          AppButton(
+              text: "Register",
+              onPressed: () {
+                NavigationHelper.pushReplacementName(
+                    context, Routes.LOGIN_ROUTE, "");
+              }),
           ToggleView(false)
         ],
       ),

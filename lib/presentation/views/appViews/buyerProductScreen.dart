@@ -1,5 +1,8 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
+import 'package:amazon_sale_app/navigation/navigation_helper.dart';
+import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/getProductImage.dart';
@@ -15,6 +18,7 @@ class BuyerProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "Product"),
+      drawer: AppDrawer(),
       body: _getUI(context),
     );
   }
@@ -48,7 +52,12 @@ class BuyerProductScreen extends StatelessWidget {
         VerticalSpace(10),
         _getAttachContainer(text: "Attach Review Screenshot"),
         VerticalSpace(20),
-        AppButton(text: "Submit", onPressed: () {})
+        AppButton(
+            text: "Submit",
+            onPressed: () {
+              NavigationHelper.pushReplacementName(
+                  context, Routes.MY_PRODUCTS_ROUTE, "");
+            })
       ],
     );
   }
