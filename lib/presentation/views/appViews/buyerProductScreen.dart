@@ -27,37 +27,47 @@ class BuyerProductScreen extends StatelessWidget {
     return Column(
       children: [
         HeaderEarningRow(),
-        GetProductImage(),
-        VerticalSpace(10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [ProductNameTextStyle(), LightCaption("04/04/21")],
-          ),
-        ),
-        VerticalSpace(7),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(
             children: [
-              BoldCaption("by Alhamrah"),
-              LightCaption("ID: #1234556")
+              GetProductImage(
+                showChat: true,
+              ),
+              VerticalSpace(10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [ProductNameTextStyle(), LightCaption("04/04/21")],
+                ),
+              ),
+              VerticalSpace(7),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BoldCaption("by Alhamrah"),
+                    LightCaption("ID: #1234556")
+                  ],
+                ),
+              ),
+              VerticalSpace(40),
+              _getAttachContainer(text: "Attach Order Screenshot"),
+              VerticalSpace(10),
+              _getAttachContainer(text: "Attach Review Screenshot"),
+              VerticalSpace(20),
+              AppButton(
+                  text: "Submit",
+                  onPressed: () {
+                    NavigationHelper.pushReplacementName(
+                        context, Routes.MY_PRODUCTS_ROUTE, "");
+                  }),
+              VerticalSpace(40),
             ],
           ),
-        ),
-        VerticalSpace(40),
-        _getAttachContainer(text: "Attach Order Screenshot"),
-        VerticalSpace(10),
-        _getAttachContainer(text: "Attach Review Screenshot"),
-        VerticalSpace(20),
-        AppButton(
-            text: "Submit",
-            onPressed: () {
-              NavigationHelper.pushReplacementName(
-                  context, Routes.MY_PRODUCTS_ROUTE, "");
-            })
+        ))
       ],
     );
   }

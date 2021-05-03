@@ -1,17 +1,44 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
+import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/productCard.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:flutter/material.dart';
 
 class MyProducts extends StatelessWidget {
+  final bool isPosted;
+  MyProducts(this.isPosted);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "Home"),
       body: _getUI(context),
       drawer: AppDrawer(),
+      bottomNavigationBar: isPosted
+          ? Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  VerticalSpace(20),
+                  AppButton(
+                      text: "Create Post",
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreatePost()));
+                      }),
+                  VerticalSpace(20),
+                ],
+              ),
+            )
+          : Container(
+              height: 1,
+              width: 1,
+            ),
     );
   }
 
@@ -53,9 +80,10 @@ class MyProducts extends StatelessWidget {
                     (MediaQuery.of(context).size.height / 1.5),
               ),
               itemBuilder: (context, i) {
-                return ProductCard();
+                return ProductCard(isPosted);
               }),
-        )
+        ),
+        VerticalSpace(20)
       ],
     );
   }

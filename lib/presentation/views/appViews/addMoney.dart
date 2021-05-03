@@ -1,13 +1,14 @@
 import 'package:amazon_sale_app/navigation/navigation_helper.dart';
 import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
+import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/textFieldLable.dart';
 import 'package:flutter/material.dart';
-import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
+
 class AddMoney extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   @override
@@ -23,52 +24,59 @@ class AddMoney extends StatelessWidget {
     return Column(
       children: [
         HeaderEarningRow(),
-        VerticalSpace(40),
-        TextFieldLabel(
-          "Paypal Account",
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(10),
-        AuthTextField(
-          label: "Paypal Email",
-          controller: _emailController,
-          validator: (val) {},
-          icon: Icons.copy,
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(17),
-        TextFieldLabel(
-          "Payoneer Account",
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(10),
-        AuthTextField(
-          label: "Payoneer Email",
-          controller: _emailController,
-          validator: (val) {},
-          icon: Icons.copy,
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(17),
-        TextFieldLabel(
-          "Payment Proof",
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(10),
-        AuthTextField(
-          label: "Attach Screenshot",
-          controller: _emailController,
-          validator: (val) {},
-          icon: Icons.attach_file,
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(37),
-        AppButton(
-            text: "Submit",
-            onPressed: () {
-              NavigationHelper.pushReplacementName(
-                  context, Routes.MY_PRODUCTS_ROUTE, "");
-            })
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              VerticalSpace(40),
+              TextFieldLabel(
+                "Paypal Account",
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Paypal Email",
+                controller: _emailController,
+                validator: (val) {},
+                icon: Icons.copy,
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel(
+                "Payoneer Account",
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Payoneer Email",
+                controller: _emailController,
+                validator: (val) {},
+                icon: Icons.copy,
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel(
+                "Payment Proof",
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Attach Screenshot",
+                controller: _emailController,
+                validator: (val) {},
+                icon: Icons.attach_file,
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(37),
+              AppButton(
+                  text: "Submit",
+                  onPressed: () {
+                    NavigationHelper.pushReplacementName(
+                        context, Routes.MY_PRODUCTS_ROUTE, "");
+                  })
+            ],
+          ),
+        ))
       ],
     );
   }

@@ -1,11 +1,11 @@
-import 'package:amazon_sale_app/navigation/navigation_helper.dart';
-import 'package:amazon_sale_app/navigation/route_constants.dart';
 import 'package:amazon_sale_app/presentation/elements/appHeading.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
+import 'package:amazon_sale_app/presentation/elements/bottomNavBar.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/textFieldLable.dart';
 import 'package:amazon_sale_app/presentation/elements/toggleView.dart';
+import 'package:amazon_sale_app/presentation/views/authVIews/forgotPassword.dart';
 import 'package:flutter/material.dart';
 
 class LoginView extends StatelessWidget {
@@ -56,8 +56,10 @@ class LoginView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: InkWell(
                 onTap: () {
-                  NavigationHelper.pushReplacementName(
-                      context, Routes.FORGOT_PASSWORD_ROUTE, "");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPasswordViews()));
                 },
                 child: Text(
                   "Forgot Password?",
@@ -71,8 +73,8 @@ class LoginView extends StatelessWidget {
           AppButton(
               text: "Login",
               onPressed: () {
-                NavigationHelper.pushReplacementName(
-                    context, Routes.DASHBOARD_ROUTE, "");
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BottomNavBar()));
               }),
           ToggleView(true)
         ],

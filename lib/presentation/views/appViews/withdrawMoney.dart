@@ -11,8 +11,16 @@ import 'package:amazon_sale_app/presentation/elements/horizontal_sized_box.dart'
 import 'package:amazon_sale_app/presentation/elements/textFieldLable.dart';
 import 'package:flutter/material.dart';
 
-class WithdrawMoney extends StatelessWidget {
+class WithdrawMoney extends StatefulWidget {
+  @override
+  _WithdrawMoneyState createState() => _WithdrawMoneyState();
+}
+
+class _WithdrawMoneyState extends State<WithdrawMoney> {
   TextEditingController _emailController = TextEditingController();
+
+  int index = -1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,41 +34,48 @@ class WithdrawMoney extends StatelessWidget {
     return Column(
       children: [
         HeaderEarningRow(),
-        VerticalSpace(40),
-        TextFieldLabel(
-          "Enter Withdrawal Amount",
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(10),
-        AuthTextField(
-          label: "Amount",
-          controller: _emailController,
-          validator: (val) {},
-          icon: Icons.attach_money_outlined,
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(17),
-        TextFieldLabel(
-          "Select Account",
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(10),
-        _getRadioButtonRow(context),
-        VerticalSpace(17),
-        AuthTextField(
-          label: "Enter selected Account Email Here",
-          controller: _emailController,
-          validator: (val) {},
-          icon: Icons.attach_file,
-          isRequireLessPadding: true,
-        ),
-        VerticalSpace(37),
-        AppButton(
-            text: "Submit",
-            onPressed: () {
-              NavigationHelper.pushReplacementName(
-                  context, Routes.MY_PRODUCTS_ROUTE, "");
-            })
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              VerticalSpace(40),
+              TextFieldLabel(
+                "Enter Withdrawal Amount",
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Amount",
+                controller: _emailController,
+                validator: (val) {},
+                icon: Icons.attach_money_outlined,
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel(
+                "Select Account",
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(10),
+              _getRadioButtonRow(context),
+              VerticalSpace(17),
+              AuthTextField(
+                label: "Enter selected Account Email Here",
+                controller: _emailController,
+                validator: (val) {},
+                icon: Icons.attach_file,
+                isRequireLessPadding: true,
+              ),
+              VerticalSpace(37),
+              AppButton(
+                  text: "Submit",
+                  onPressed: () {
+                    NavigationHelper.pushReplacementName(
+                        context, Routes.MY_PRODUCTS_ROUTE, "");
+                  })
+            ],
+          ),
+        ))
       ],
     );
   }
@@ -79,9 +94,16 @@ class WithdrawMoney extends StatelessWidget {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.radio_button_off,
-                    color: FrontEndConfigs.appBaseColor,
+                  InkWell(
+                    onTap: () {
+                      setIndex(i);
+                    },
+                    child: Icon(
+                      i == getIndex
+                          ? Icons.radio_button_checked_outlined
+                          : Icons.radio_button_off,
+                      color: FrontEndConfigs.appBaseColor,
+                    ),
                   ),
                   HorizontalSpace(6),
                   Container(
@@ -98,4 +120,11 @@ class WithdrawMoney extends StatelessWidget {
       ),
     );
   }
+
+  setIndex(int i) {
+    index = i;
+    setState(() {});
+  }
+
+  get getIndex => index;
 }

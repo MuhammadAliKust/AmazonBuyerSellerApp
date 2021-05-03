@@ -120,7 +120,8 @@ class _CreatePostState extends State<CreatePost> {
                     onPressed: () {
                       NavigationHelper.pushReplacementName(
                           context, Routes.MY_PRODUCTS_ROUTE, "");
-                    })
+                    }),
+                VerticalSpace(30),
               ],
             ),
           ),

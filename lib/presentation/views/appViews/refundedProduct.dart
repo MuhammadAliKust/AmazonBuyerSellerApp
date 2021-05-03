@@ -29,7 +29,7 @@ class RefundedProduct extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                GetProductImage(),
+                GetProductImage(showChat: false),
                 VerticalSpace(10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),

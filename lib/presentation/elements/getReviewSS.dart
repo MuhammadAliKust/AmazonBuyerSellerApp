@@ -1,3 +1,4 @@
+import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:flutter/material.dart';
 
 import 'horizontal_sized_box.dart';
@@ -27,8 +28,9 @@ class GetReviewSS extends StatelessWidget {
                 Container(
                   height: 30,
                   width: 30,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: FrontEndConfigs.appBaseColor),
                   child: Center(
                     child: Icon(
                       Icons.edit,
@@ -40,8 +42,9 @@ class GetReviewSS extends StatelessWidget {
                 Container(
                   height: 30,
                   width: 30,
-                  decoration:
-                      BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: FrontEndConfigs.appBaseColor),
                   child: Center(
                     child: Icon(
                       Icons.download_rounded,

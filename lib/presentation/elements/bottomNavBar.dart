@@ -24,54 +24,56 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        // return showNavigationDialog(context,
-        //     message: "Do you really want to exit?",
-        //     buttonText: "Yes", navigation: () {
-        //   exit(0);
-        // }, secondButtonText: "No", showSecondButton: true);
-      },
-      child: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Colors.white,
-        handleAndroidBackButtonPress: true,
-        resizeToAvoidBottomInset: true,
-        // This needs to be true if you want to move up the screen when keyboard appears.
-        stateManagement: true,
-        hideNavigationBarWhenKeyboardShows: true,
-        // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: () {
+          // return showNavigationDialog(context,
+          //     message: "Do you really want to exit?",
+          //     buttonText: "Yes", navigation: () {
+          //   exit(0);
+          // }, secondButtonText: "No", showSecondButton: true);
+        },
+        child: PersistentTabView(
+          context,
+          controller: _controller,
+          screens: _buildScreens(),
+          items: _navBarsItems(),
+          confineInSafeArea: true,
+          backgroundColor: Colors.white,
+          handleAndroidBackButtonPress: true,
+          resizeToAvoidBottomInset: true,
+          // This needs to be true if you want to move up the screen when keyboard appears.
+          stateManagement: true,
+          hideNavigationBarWhenKeyboardShows: true,
+          // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument.
+          decoration: NavBarDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            colorBehindNavBar: Colors.white,
+          ),
+          popAllScreensOnTapOfSelectedTab: true,
+          popActionScreens: PopActionScreensType.all,
+          itemAnimationProperties: ItemAnimationProperties(
+            // Navigation Bar's items animation properties.
+            duration: Duration(milliseconds: 200),
+            curve: Curves.ease,
+          ),
 
-        screenTransitionAnimation: ScreenTransitionAnimation(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
+          screenTransitionAnimation: ScreenTransitionAnimation(
+            // Screen transition animation on change of selected tab.
+            animateTabTransition: true,
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 200),
+          ),
+          navBarStyle: NavBarStyle
+              .style12, // Choose the nav bar style with this property.
         ),
-        navBarStyle:
-            NavBarStyle.style12, // Choose the nav bar style with this property.
       ),
     );
   }
 
   List<Widget> _buildScreens() {
     return [
-      MyProducts(),
+      MyProducts(false),
       MessagesScreen(),
       NotificationScreen(),
       ProfileView(),
