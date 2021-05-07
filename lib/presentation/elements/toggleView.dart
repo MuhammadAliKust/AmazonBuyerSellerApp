@@ -1,5 +1,5 @@
-import 'package:amazon_sale_app/navigation/navigation_helper.dart';
-import 'package:amazon_sale_app/navigation/route_constants.dart';
+import 'package:amazon_sale_app/presentation/views/authVIews/login.dart';
+import 'package:amazon_sale_app/presentation/views/authVIews/registerView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,10 +33,10 @@ class ToggleView extends StatelessWidget {
           InkWell(
             onTap: () {
               isSignIn
-                  ? NavigationHelper.pushReplacementName(
-                      context, Routes.SIGN_UP_ROUTE, "")
-                  : NavigationHelper.pushReplacementName(
-                      context, Routes.LOGIN_ROUTE, "");
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RegisterView()))
+                  : Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginView()));
             },
             child: Text(
               isSignIn ? " Create Account" : " Login",

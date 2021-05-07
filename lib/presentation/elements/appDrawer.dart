@@ -3,7 +3,6 @@ import 'package:amazon_sale_app/presentation/views/appViews/addMoney.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/howToUse.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/productTimerScreen.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/profileView.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/refundedProduct.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/submittedSSfromBuyer.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/withdrawMoney.dart';
@@ -17,79 +16,66 @@ import 'heigh_sized_box.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            _createHeader(),
-            VerticalSpace(20),
-            Divider(),
-            _getExpansionTile(context),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.attach_money,
-                text: 'Add Money',
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddMoney()));
-                }),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.attach_money,
-                text: 'Withdraw Money',
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => WithdrawMoney()));
-                }),
-            Divider(),
-            _createDrawerItem(
-                iconString: "assets/icons/post.png",
-                text: 'Posted Products',
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyProducts(true)));
-                }),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.person_outline,
-                text: 'Profile',
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ProfileView()));
-                }),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.share,
-                text: 'https://www.amazon......',
-                onTap: () {}),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.play_arrow,
-                text: 'How to use?',
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HowToUse()));
-                }),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.exit_to_app_outlined,
-                text: 'Sign Out',
-                onTap: () async {
-                  pushNewScreen(context,
-                      screen: LoginView(), withNavBar: false);
-                }),
-            Divider(),
-            _createDrawerItem(
-                icon: Icons.bug_report, text: 'Report an issue', onTap: () {}),
-            ListTile(
-              title: Text('1.0.0'),
-              onTap: () {},
-            ),
-          ],
-        ),
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          _createHeader(),
+          VerticalSpace(20),
+          Divider(),
+          _getExpansionTile(context),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.attach_money,
+              text: 'Add Money',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddMoney()));
+              }),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.attach_money,
+              text: 'Withdraw Money',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => WithdrawMoney()));
+              }),
+          Divider(),
+          _createDrawerItem(
+              iconString: "assets/icons/post.png",
+              text: 'Posted Products',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyProducts(true)));
+              }),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.share,
+              text: 'https://www.amazon......',
+              onTap: () {}),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.play_arrow,
+              text: 'How to use?',
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HowToUse()));
+              }),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.exit_to_app_outlined,
+              text: 'Sign Out',
+              onTap: () async {
+                pushNewScreen(context, screen: LoginView(), withNavBar: false);
+              }),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.bug_report, text: 'Report an issue', onTap: () {}),
+          ListTile(
+            title: Text('1.0.0'),
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

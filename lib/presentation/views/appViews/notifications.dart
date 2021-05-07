@@ -4,12 +4,15 @@ import 'package:amazon_sale_app/presentation/elements/customNotificationTile.dar
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatelessWidget {
+  final bool fromNavbar;
+  NotificationScreen({this.fromNavbar = false});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: "Notifications"),
+      appBar: customAppBar(context,
+          title: "Notifications", doestNotshow: fromNavbar),
       body: _getUI(context),
-      drawer: AppDrawer(),
+      drawer: !fromNavbar ? AppDrawer() : null,
     );
   }
 

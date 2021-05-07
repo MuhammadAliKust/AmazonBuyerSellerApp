@@ -9,13 +9,14 @@ import 'package:flutter/material.dart';
 
 class MyProducts extends StatelessWidget {
   final bool isPosted;
-  MyProducts(this.isPosted);
+  final bool fromNavbar;
+  MyProducts(this.isPosted, {this.fromNavbar = false});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: "Home"),
+      appBar: customAppBar(context, title: "Home", doestNotshow: fromNavbar),
       body: _getUI(context),
-      drawer: AppDrawer(),
+      drawer: !fromNavbar ? AppDrawer() : null,
       bottomNavigationBar: isPosted
           ? Container(
               color: Theme.of(context).scaffoldBackgroundColor,

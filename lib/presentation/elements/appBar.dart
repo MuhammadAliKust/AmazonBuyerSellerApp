@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-Widget customAppBar(
-  BuildContext context, {
-  @required String title,
-}) {
+Widget customAppBar(BuildContext context,
+    {@required String title, bool doestNotshow = false}) {
   return AppBar(
     title: Text(title),
     centerTitle: true,
-    leading: Builder(
-      builder: (context) {
-        return IconButton(
-          onPressed: () => Scaffold.of(context).openDrawer(),
-          icon: Icon(Icons.menu, size: 28, color: Colors.white),
-        );
-      },
-    ),
+    leading: !doestNotshow
+        ? Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () => Scaffold.of(context).openDrawer(),
+                icon: Icon(Icons.menu, size: 28, color: Colors.white),
+              );
+            },
+          )
+        : Container(),
     actions: [
       Center(
         child: Padding(
