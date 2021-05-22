@@ -6,18 +6,58 @@ import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/productCard.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:flutter/material.dart';
+import 'package:popup_menu/popup_menu.dart';
 
-class MyProducts extends StatelessWidget {
+class MyProducts extends StatefulWidget {
   final bool isPosted;
   final bool fromNavbar;
   MyProducts(this.isPosted, {this.fromNavbar = false});
   @override
+  _MyProductsState createState() => _MyProductsState();
+}
+
+class _MyProductsState extends State<MyProducts> {
+  GlobalKey btnKey = GlobalKey();
+  List<String> monthList = [
+    "January",
+    "February",
+    "March",
+  ];
+  PopupMenu menu;
+  @override
+  void initState() {
+    // TODO: implement initState
+    menu = PopupMenu(
+        items: [
+          MenuItem(
+              title: 'By Price',
+              image: Icon(
+                Icons.monetization_on_sharp,
+                color: Colors.white,
+              )),
+          MenuItem(
+              title: 'By Popularity',
+              image: Icon(
+                Icons.trending_up,
+                color: Colors.white,
+              )),
+        ],
+        onClickMenu: onClickMenu,
+        stateChanged: stateChanged,
+        onDismiss: onDismiss);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    PopupMenu.context = context;
     return Scaffold(
-      appBar: customAppBar(context, title: "Home", doestNotshow: fromNavbar),
+      appBar:
+          customAppBar(context, title: "Home", doestNotshow: widget.fromNavbar),
       body: _getUI(context),
-      drawer: !fromNavbar ? AppDrawer() : null,
-      bottomNavigationBar: isPosted
+      drawer: !widget.fromNavbar ? AppDrawer() : null,
+      bottomNavigationBar: widget.isPosted
           ? Container(
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
@@ -55,7 +95,13 @@ class MyProducts extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: TextField(
               decoration: InputDecoration(
-                  suffixIcon: Image.asset('assets/icons/filter.png'),
+                  suffix: InkWell(
+                    key: btnKey,
+                    onTap: () {
+                      menu.show(widgetKey: btnKey);
+                    },
+                    child: Image.asset('assets/icons/filter.png'),
+                  ),
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(borderSide: BorderSide.none),
                   focusedBorder:
@@ -65,7 +111,7 @@ class MyProducts extends StatelessWidget {
                   errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
                   focusedErrorBorder:
                       OutlineInputBorder(borderSide: BorderSide.none),
-                  labelText: "Search your product here.."),
+                  hintText: "Search your product here.."),
             ),
           ),
         ),
@@ -77,15 +123,30 @@ class MyProducts extends StatelessWidget {
               itemCount: 10,
               gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: MediaQuery.of(context).size.width /
-                    (MediaQuery.of(context).size.height / 1.5),
+                childAspectRatio: widget.isPosted
+                    ? MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 1.55)
+                    : MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 1.43),
               ),
               itemBuilder: (context, i) {
-                return ProductCard(isPosted);
+                return ProductCard(widget.isPosted);
               }),
         ),
         VerticalSpace(20)
       ],
     );
+  }
+
+  void stateChanged(bool isShow) {
+    print('menu is ${isShow ? 'showing' : 'closed'}');
+  }
+
+  void onClickMenu(MenuItemProvider item) {
+    print('Click menu -> ${item.menuTitle}');
+  }
+
+  void onDismiss() {
+    print('Menu is dismiss');
   }
 }

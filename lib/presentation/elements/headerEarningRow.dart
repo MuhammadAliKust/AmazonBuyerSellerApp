@@ -14,11 +14,11 @@ class HeaderEarningRow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildPaymentWidget(),
+              _buildPaymentWidget(title: "Pending"),
               _buildVerticalDivider(),
-              _buildPaymentWidget(),
+              _buildPaymentWidget(title: "Earned"),
               _buildVerticalDivider(),
-              _buildPaymentWidget(),
+              _buildPaymentWidget(title: "Ordered"),
             ],
           ),
         ],
@@ -26,7 +26,7 @@ class HeaderEarningRow extends StatelessWidget {
     );
   }
 
-  _buildPaymentWidget() {
+  _buildPaymentWidget({String title}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -38,7 +38,7 @@ class HeaderEarningRow extends StatelessWidget {
               color: FrontEndConfigs.appBaseColor),
         ),
         Text(
-          "Pending",
+          title,
           style: TextStyle(fontSize: 14),
         )
       ],

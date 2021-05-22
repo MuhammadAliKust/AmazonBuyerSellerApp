@@ -2,14 +2,16 @@ import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/addMoney.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/howToUse.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/productCheckedScreen.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/productTimerScreen.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/refundedProduct.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/submittedSSfromBuyer.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/withdrawMoney.dart';
 import 'package:amazon_sale_app/presentation/views/authVIews/login.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:toast/toast.dart';
 
 import 'heigh_sized_box.dart';
 
@@ -49,10 +51,33 @@ class AppDrawer extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => MyProducts(true)));
               }),
           Divider(),
-          _createDrawerItem(
-              icon: Icons.share,
-              text: 'https://www.amazon......',
-              onTap: () {}),
+          ListTile(
+            title: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.share,
+                  color: Colors.black,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text('https://www.amazon......'),
+                )
+              ],
+            ),
+            trailing: InkWell(
+              onTap: () {
+                FlutterClipboard.copy('https://www.amazon......').then((value) {
+                  Toast.show("Copied", context,
+                      duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                });
+              },
+              child: Icon(
+                Icons.copy,
+                size: 16,
+                color: Colors.black,
+              ),
+            ),
+          ),
           Divider(),
           _createDrawerItem(
               icon: Icons.play_arrow,
@@ -90,7 +115,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: Text("Ordered Products"),
+            child: Text("Order Products"),
           )
         ],
       ),
@@ -116,7 +141,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SubmittedScreenShotFromBuyer()));
+                        builder: (context) => ProductCheckedView()));
               }),
         ),
         Padding(

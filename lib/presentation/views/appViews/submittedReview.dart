@@ -30,7 +30,7 @@ class SubmittedReview extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                GetProductImage(),
+                GetProductImage(showChat: true),
                 VerticalSpace(10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
