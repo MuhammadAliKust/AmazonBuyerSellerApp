@@ -1,3 +1,6 @@
+import 'package:amazon_sale_app/application/userProvider.dart';
+import 'package:amazon_sale_app/infrastructure/models/product_model.dart';
+import 'package:amazon_sale_app/infrastructure/services/product_services.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
@@ -7,23 +10,27 @@ import 'package:amazon_sale_app/presentation/elements/productCard.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:flutter/material.dart';
 import 'package:popup_menu/popup_menu.dart';
+import 'package:provider/provider.dart';
 
 class MyProducts extends StatefulWidget {
-  final bool isPosted;
   final bool fromNavbar;
-  MyProducts(this.isPosted, {this.fromNavbar = false});
+
+  MyProducts({this.fromNavbar = false});
+
   @override
   _MyProductsState createState() => _MyProductsState();
 }
 
 class _MyProductsState extends State<MyProducts> {
   GlobalKey btnKey = GlobalKey();
+  ProductServices _productServices = ProductServices();
   List<String> monthList = [
     "January",
     "February",
     "March",
   ];
   PopupMenu menu;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,33 +64,27 @@ class _MyProductsState extends State<MyProducts> {
           customAppBar(context, title: "Home", doestNotshow: widget.fromNavbar),
       body: _getUI(context),
       drawer: !widget.fromNavbar ? AppDrawer() : null,
-      bottomNavigationBar: widget.isPosted
-          ? Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  VerticalSpace(20),
-                  AppButton(
-                      text: "Create Post",
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreatePost()));
-                      }),
-                  VerticalSpace(20),
-                ],
-              ),
-            )
-          : Container(
-              height: 1,
-              width: 1,
-            ),
+      bottomNavigationBar: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            VerticalSpace(20),
+            AppButton(
+                text: "Create Post",
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CreatePost()));
+                }),
+            VerticalSpace(20),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _getUI(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return Column(
       children: [
         HeaderEarningRow(),
@@ -116,22 +117,29 @@ class _MyProductsState extends State<MyProducts> {
           ),
         ),
         VerticalSpace(10),
-        Expanded(
-          child: GridView.builder(
-              physics: BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: widget.isPosted
-                    ? MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 1.55)
-                    : MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 1.43),
-              ),
-              itemBuilder: (context, i) {
-                return ProductCard(widget.isPosted);
-              }),
+        StreamProvider.value(
+          value: _productServices.streamAllProducts(user.getUserDetails.uid),
+          builder: (context, child) {
+            return Expanded(
+              child: context.watch<List<ProductModel>>() == null
+                  ? Center(child: CircularProgressIndicator())
+                  : GridView.builder(
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: context.watch<List<ProductModel>>().length,
+                      gridDelegate:
+                          new SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: MediaQuery.of(context)
+                                      .size
+                                      .width /
+                                  (MediaQuery.of(context).size.height / 1.55)),
+                      itemBuilder: (context, i) {
+                        return ProductCard(
+                            context.watch<List<ProductModel>>()[i]);
+                      }),
+            );
+          },
         ),
         VerticalSpace(20)
       ],

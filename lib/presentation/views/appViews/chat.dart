@@ -1,6 +1,7 @@
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/customNotificationTile.dart';
+import 'package:amazon_sale_app/presentation/elements/noData.dart';
 import 'package:flutter/material.dart';
 
 class MessagesScreen extends StatelessWidget {
@@ -12,7 +13,8 @@ class MessagesScreen extends StatelessWidget {
       appBar:
           customAppBar(context, title: "Messages", doestNotshow: fromNavbar),
       drawer: !fromNavbar ? AppDrawer() : null,
-      body: _getUI(context),
+      body: NoData(),
+      // body: _getUI(context),
     );
   }
 

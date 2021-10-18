@@ -30,7 +30,7 @@ class OrderedProductScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [ProductNameTextStyle(), LightCaption("04/04/21")],
+            children: [ProductNameTextStyle('Asad'), LightCaption("04/04/21")],
           ),
         ),
         VerticalSpace(7),

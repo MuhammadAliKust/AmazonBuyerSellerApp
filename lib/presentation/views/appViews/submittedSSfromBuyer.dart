@@ -38,7 +38,7 @@ class SubmittedScreenShotFromBuyer extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ProductNameTextStyle(),
+                      ProductNameTextStyle('Asad'),
                       LightCaption("04/04/21")
                     ],
                   ),
@@ -61,9 +61,9 @@ class SubmittedScreenShotFromBuyer extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GetReviewSS(),
+                        GetReviewSS('Asad'),
                         HorizontalSpace(10),
-                        GetReviewSS(),
+                        GetReviewSS('Asad'),
                       ],
                     ),
                   ),

@@ -73,7 +73,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> _buildScreens() {
     return [
-      MyProducts(false, fromNavbar: false),
+      MyProducts(fromNavbar: false),
       MessagesScreen(fromNavbar: true),
       NotificationScreen(fromNavbar: true),
       ProfileView(),

@@ -1,10 +1,31 @@
+import 'package:amazon_sale_app/application/userProvider.dart';
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/presentation/views/authVIews/login.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+import 'application/app_state.dart';
+import 'application/errorStrings.dart';
+import 'application/signUpBusinissLogic.dart';
+import 'infrastructure/services/authServices.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => SignUpBusinessLogic()),
+    ChangeNotifierProvider(create: (_) => AppState()),
+    ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => ErrorString()),
+    ChangeNotifierProvider(
+      create: (_) => AuthServices.instance(),
+    ),
+    StreamProvider(
+      create: (context) => context.read<AuthServices>().authState,
+    )
+  ], child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {

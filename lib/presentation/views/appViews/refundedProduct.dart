@@ -1,16 +1,21 @@
+import 'package:amazon_sale_app/infrastructure/models/product_model.dart';
 import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
-import 'package:amazon_sale_app/presentation/elements/getProductImage.dart';
 import 'package:amazon_sale_app/presentation/elements/getReviewSS.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/horizontal_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/lightCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/productNameTextStyle.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class RefundedProduct extends StatelessWidget {
+  final ProductModel productModel;
+
+  RefundedProduct(this.productModel);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +34,29 @@ class RefundedProduct extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                GetProductImage(showChat: false),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: productModel.productImage,
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fill,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
                 VerticalSpace(10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ProductNameTextStyle(),
-                      LightCaption("04/04/21")
+                      ProductNameTextStyle(productModel.keyword),
+                      LightCaption(productModel.refundDate ?? "N/A")
                     ],
                   ),
                 ),
@@ -47,8 +66,8 @@ class RefundedProduct extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      BoldCaption("by Alhamrah"),
-                      LightCaption("ID: #1234556")
+                      BoldCaption("by ${productModel.store}"),
+                      LightCaption("ID: #${productModel.docId.substring(0, 6)}")
                     ],
                   ),
                 ),
@@ -56,22 +75,22 @@ class RefundedProduct extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text(
-                    "Black head phones with soft ear foam. Specially designed for comfort with very high quality of sound results. High bass and clear sound.",
+                    productModel.description ?? "N/A",
                     style: TextStyle(fontSize: 14),
                   ),
                 ),
                 VerticalSpace(15),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: FittedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GetReviewSS(),
+                        GetReviewSS(productModel.orderImage),
                         HorizontalSpace(10),
-                        GetReviewSS(),
+                        GetReviewSS(productModel.reviewImage),
                         HorizontalSpace(10),
-                        GetReviewSS(),
+                        GetReviewSS(productModel.refundImage),
                       ],
                     ),
                   ),

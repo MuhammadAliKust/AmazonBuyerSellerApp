@@ -5,12 +5,12 @@ import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
-import 'package:amazon_sale_app/presentation/elements/ordered_product_list_tile.dart';
+import 'package:amazon_sale_app/presentation/elements/refunded_product_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OrderedProductListView extends StatelessWidget {
-  ProductServices _productServices = ProductServices();
+class RefundedProductListView extends StatelessWidget {
+  final ProductServices _productServices = ProductServices();
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class OrderedProductListView extends StatelessWidget {
         VerticalSpace(10),
         Expanded(
           child: StreamProvider.value(
-            value:
-                _productServices.streamOrderedProduct(user.getUserDetails.uid),
+            value: _productServices
+                .streamRefundedProducts(user.getUserDetails.uid),
             builder: (context, child) {
               return context.watch<List<ProductModel>>() == null
                   ? Center(child: CircularProgressIndicator())
@@ -39,7 +39,7 @@ class OrderedProductListView extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: context.watch<List<ProductModel>>().length,
                       itemBuilder: (context, i) {
-                        return OrderedProductListTile(
+                        return RefundedProductListTile(
                             context.watch<List<ProductModel>>()[i]);
                       });
             },

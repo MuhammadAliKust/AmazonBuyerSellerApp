@@ -31,7 +31,7 @@ class HeaderEarningRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "\$50.00",
+          "\$0.00",
           style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 14,

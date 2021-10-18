@@ -27,7 +27,7 @@ Widget customAppBar(BuildContext context,
             width: 46,
             child: Center(
                 child: Text(
-              "\$500",
+              "\$0",
               style: TextStyle(fontSize: 14),
             )),
           ),

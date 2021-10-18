@@ -42,6 +42,10 @@ class AuthTextField extends StatelessWidget {
           focusedBorder: authTextFieldBorder,
           enabledBorder:
               OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          errorBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          focusedErrorBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
           border: authTextFieldBorder,
         ),
       ),

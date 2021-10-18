@@ -9,8 +9,6 @@ import 'package:amazon_sale_app/presentation/views/appViews/orderedProductScreen
 import 'package:amazon_sale_app/presentation/views/appViews/productCheckedScreen.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/productTimerScreen.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/profileView.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/refundedProduct.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/submittedReview.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/submittedSSfromBuyer.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/withdrawMoney.dart';
 import 'package:amazon_sale_app/presentation/views/authVIews/forgotPassword.dart';
@@ -35,7 +33,7 @@ class RouteGenerator {
       case Routes.DASHBOARD_ROUTE:
         return MaterialPageRoute(builder: (_) => BottomNavBar());
       case Routes.ADD_MONEY_ROUTE:
-        return MaterialPageRoute(builder: (_) => AddMoney());
+        return MaterialPageRoute(builder: (_) => AddMoneyView());
       case Routes.CREATE_POST_ROUTE:
         return MaterialPageRoute(builder: (_) => CreatePost());
       case Routes.BUYER_PRODUCT_ROUTE:
@@ -53,18 +51,18 @@ class RouteGenerator {
       case Routes.ORDERED_PRODUCTS_ROUTE:
         return MaterialPageRoute(builder: (_) => OrderedProductScreen());
       case Routes.PRODUCT_CHECKED_ROUTE:
-        return MaterialPageRoute(builder: (_) => ProductCheckedView());
+        return MaterialPageRoute(builder: (_) => OrderedProductListView());
       case Routes.PRODUCT_TIMER_ROUTE:
         return MaterialPageRoute(builder: (_) => ProductTimerView());
-      case Routes.REFUNDED_PRODUCT_ROUTE:
-        return MaterialPageRoute(builder: (_) => RefundedProduct());
-      case Routes.SUBMIT_REVIEW_ROUTE:
-        return MaterialPageRoute(builder: (_) => SubmittedReview());
+      // case Routes.REFUNDED_PRODUCT_ROUTE:
+      //   return MaterialPageRoute(builder: (_) => RefundedProduct());
+      // case Routes.SUBMIT_REVIEW_ROUTE:
+      //   return MaterialPageRoute(builder: (_) => SubmittedReview());
       case Routes.SUBMIT_SS_ROUTE:
         return MaterialPageRoute(
             builder: (_) => SubmittedScreenShotFromBuyer());
       case Routes.WITHDRAW_MONEY_ROUTE:
-        return MaterialPageRoute(builder: (_) => WithdrawMoney());
+        return MaterialPageRoute(builder: (_) => WithdrawMoneyView());
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

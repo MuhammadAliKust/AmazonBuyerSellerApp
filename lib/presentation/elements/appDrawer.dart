@@ -1,16 +1,18 @@
+import 'package:amazon_sale_app/application/userProvider.dart';
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/addMoney.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/howToUse.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/productCheckedScreen.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/productTimerScreen.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/refundedProduct.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/refunded_product_list_view.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/reviewd_product_list_view.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/withdrawMoney.dart';
 import 'package:amazon_sale_app/presentation/views/authVIews/login.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 import 'heigh_sized_box.dart';
@@ -22,7 +24,7 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          _createHeader(),
+          _createHeader(context),
           VerticalSpace(20),
           Divider(),
           _getExpansionTile(context),
@@ -32,23 +34,24 @@ class AppDrawer extends StatelessWidget {
               text: 'Add Money',
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddMoney()));
+                    MaterialPageRoute(builder: (context) => AddMoneyView()));
               }),
           Divider(),
           _createDrawerItem(
               icon: Icons.attach_money,
               text: 'Withdraw Money',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => WithdrawMoney()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WithdrawMoneyView()));
               }),
           Divider(),
           _createDrawerItem(
               iconString: "assets/icons/post.png",
               text: 'Posted Products',
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyProducts(true)));
+                pushNewScreen(context, screen: MyProducts());
               }),
           Divider(),
           ListTile(
@@ -129,7 +132,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProductTimerView()));
+                        builder: (context) => OrderedProductListView()));
               }),
         ),
         Padding(
@@ -141,7 +144,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProductCheckedView()));
+                        builder: (context) => ReviewedProductListView()));
               }),
         ),
         Padding(
@@ -150,8 +153,10 @@ class AppDrawer extends StatelessWidget {
               iconString: "assets/icons/refund.png",
               text: "Refunded Product",
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RefundedProduct()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RefundedProductListView()));
               }),
         ),
       ],
@@ -159,7 +164,9 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _createHeader() {
+  Widget _createHeader(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
+    print(user.getUserDetails.toJson('uid'));
     return Container(
       height: 240,
       child: DrawerHeader(
@@ -180,11 +187,11 @@ class AppDrawer extends StatelessWidget {
             ),
             VerticalSpace(10),
             _getHeaderText(
-              "Muhammad Arif",
+              user.getUserDetails.userName ?? "n/a",
             ),
             VerticalSpace(5),
             _getHeaderText(
-              "kinmaker.ktk@gmail.com",
+              user.getUserDetails.email ?? "n/a",
             ),
           ],
         ),

@@ -1,13 +1,20 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
+import 'package:amazon_sale_app/infrastructure/models/product_model.dart';
+import 'package:amazon_sale_app/infrastructure/services/product_services.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/buyerProductScreen.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/profileView.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ProductCard extends StatelessWidget {
-  final bool isPosted;
-  ProductCard(this.isPosted);
+  final ProductModel productModel;
+
+  ProductCard(this.productModel);
+
+  ProductServices _productServices = ProductServices();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,74 +29,79 @@ class ProductCard extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => BuyerProductScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => BuyerProductScreen()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: Stack(
                     children: [
-                      Container(
-                        height: 120,
-                        // width: 147,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/shoe.png'),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        child: Container(
-                          height: 33,
-                          width: 54,
-                          decoration: BoxDecoration(
-                              color: FrontEndConfigs.appBaseColor,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
-                                  bottomRight: Radius.circular(5))),
-                          child: Center(
-                            child: Text(
-                              "Sale",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.white),
-                            ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          imageUrl: productModel.productImage,
+                          height: 120,
+                          fit: BoxFit.fill,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                                value: downloadProgress.progress),
                           ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                         ),
                       ),
-                      Positioned.fill(
-                        top: 10,
-                        right: 10,
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ProfileView()));
-                            },
-                            child: Container(
-                              height: 23,
-                              width: 28,
-                              decoration: BoxDecoration(
-                                  color: Color(0xff812831),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(5),
-                                  )),
-                              child: Center(
-                                child: Icon(
-                                  Icons.person,
-                                  size: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 10,
+                      //   child: Container(
+                      //     height: 33,
+                      //     width: 54,
+                      //     decoration: BoxDecoration(
+                      //         color: FrontEndConfigs.appBaseColor,
+                      //         borderRadius: BorderRadius.only(
+                      //             topRight: Radius.circular(5),
+                      //             bottomRight: Radius.circular(5))),
+                      //     child: Center(
+                      //       child: Text(
+                      //         "Sale",
+                      //         style:
+                      //             TextStyle(fontSize: 14, color: Colors.white),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Positioned.fill(
+                      //   top: 10,
+                      //   right: 10,
+                      //   child: Align(
+                      //     alignment: Alignment.topRight,
+                      //     child: InkWell(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => ProfileView()));
+                      //       },
+                      //       child: Container(
+                      //         height: 23,
+                      //         width: 28,
+                      //         decoration: BoxDecoration(
+                      //             color: Color(0xff812831),
+                      //             borderRadius: BorderRadius.all(
+                      //               Radius.circular(5),
+                      //             )),
+                      //         child: Center(
+                      //           child: Icon(
+                      //             Icons.person,
+                      //             size: 16,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -102,23 +114,19 @@ class ProductCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Sports Shoes",
+                          productModel.keyword,
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 14),
                         ),
                         Text(
-                          "Sold by Alhamrah",
+                          "Sold by ${productModel.store}",
                           style:
                               TextStyle(color: Color(0xff919191), fontSize: 12),
                         ),
                       ],
                     ),
-                    if (!isPosted)
-                      IconButton(
-                          icon: Icon(Icons.copy, size: 17, color: Colors.black),
-                          onPressed: () {})
                   ],
                 ),
               ),
@@ -126,13 +134,13 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Feedback",
+                    productModel.reviewType,
                     style: TextStyle(color: Color(0xff919191), fontSize: 12),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
-                      "12",
+                      productModel.totalReview.toString(),
                       style: TextStyle(color: Color(0xff919191), fontSize: 12),
                     ),
                   ),
@@ -144,30 +152,13 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "\$50.00",
+                    "\$${productModel.price}",
                     style: TextStyle(
                         color: Color(0xffE76F25),
                         fontSize: 14,
                         fontWeight: FontWeight.bold),
                   ),
-                  if (isPosted) myPopMenu(),
-                  if (!isPosted)
-                    Container(
-                      width: 55,
-                      height: 27,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: FrontEndConfigs.appBaseColor),
-                      child: Center(
-                        child: Text(
-                          "Buy",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
+                  myPopMenu(context),
                 ],
               ),
             ],
@@ -177,7 +168,7 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget myPopMenu() {
+  Widget myPopMenu(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5.0),
       child: Container(
@@ -190,7 +181,39 @@ class ProductCard extends StatelessWidget {
               size: 19,
               color: FrontEndConfigs.appBaseColor,
             ),
-            onSelected: (value) {},
+            onSelected: (value) {
+              if (value == 2) {
+                showDialog(
+                    barrierDismissible: false,
+                    context: (context),
+                    builder: (dialogContext) {
+                      return CupertinoAlertDialog(
+                        title: Text(
+                          "Message",
+                          style: TextStyle(color: Colors.green[900]),
+                        ),
+                        content: Text(
+                          "Do you really want to delete this product?",
+                        ),
+                        actions: [
+                          FlatButton(
+                              onPressed: () {
+                                _productServices.deleteProduct(context,
+                                    categoryID: productModel.docId);
+                                Navigator.pop(dialogContext);
+                                pushNewScreen(context, screen: MyProducts());
+                              },
+                              child: Text("Yes")),
+                          FlatButton(
+                              onPressed: () {
+                                Navigator.pop(dialogContext);
+                              },
+                              child: Text("No"))
+                        ],
+                      );
+                    });
+              }
+            },
             itemBuilder: (context) => [
                   PopupMenuItem(
                       value: 1,

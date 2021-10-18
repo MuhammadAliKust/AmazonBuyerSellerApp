@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:amazon_sale_app/application/userProvider.dart';
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/horizontal_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/profileTile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
   File _image;
@@ -17,6 +19,7 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _getUI(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -39,7 +42,7 @@ class ProfileView extends StatelessWidget {
                   _buildDP(),
                   VerticalSpace(10),
                   Text(
-                    "Muhammad Arif",
+                    user.getUserDetails.userName,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -47,7 +50,7 @@ class ProfileView extends StatelessWidget {
                   ),
                   VerticalSpace(10),
                   Text(
-                    "Seller",
+                    user.getUserDetails.isSeller ? "Seller" : "Buyer",
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -94,27 +97,27 @@ class ProfileView extends StatelessWidget {
               ),
               ProfileTile(
                 label: "Email",
-                value: "kinmaker.ktk@gmail.com",
+                value: user.getUserDetails.email,
                 icon: Icons.email_outlined,
               ),
               ProfileTile(
                 label: "Paypal:",
-                value: "kinmaker.ktk@gmail.com",
+                value: user.getUserDetails.paypal,
                 iconString: "assets/icons/paypal.png",
               ),
               ProfileTile(
                 label: "Amazon Profile Link:",
-                value: "https://www.amazon.com",
+                value: user.getUserDetails.amazon,
                 iconString: "assets/icons/amazon.png",
               ),
               ProfileTile(
                 label: "Phone Number:",
-                value: "03179570054",
+                value: user.getUserDetails.number,
                 icon: Icons.phone_outlined,
               ),
               ProfileTile(
                 label: "Country",
-                value: "Pakistan",
+                value: user.getUserDetails.country,
                 iconString: "assets/icons/globe.png",
               ),
             ],
