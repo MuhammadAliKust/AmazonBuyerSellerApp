@@ -20,6 +20,7 @@ class UserModel {
     this.amazon,
     this.payoneer,
     this.uid,
+    this.dp,
   });
 
   String userName;
@@ -32,6 +33,7 @@ class UserModel {
   String amazon;
   String payoneer;
   String uid;
+  String dp;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         userName: json["userName"],
@@ -44,6 +46,7 @@ class UserModel {
         amazon: json["amazon"],
         uid: json["uid"],
         payoneer: json["payoneer"],
+        dp: json["dp"],
       );
 
   Map<String, dynamic> toJson(String uid) => {
@@ -57,5 +60,6 @@ class UserModel {
         "amazon": amazon,
         "uid": uid,
         "payoneer": payoneer,
+        "dp": dp,
       };
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amazon_sale_app/application/errorStrings.dart';
 import 'package:amazon_sale_app/application/loginBusinessLogic.dart';
 import 'package:amazon_sale_app/configurations/enums.dart';
@@ -23,8 +25,13 @@ class LoginView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _getUI(context),
+    return WillPopScope(
+      onWillPop: () {
+        return exit(0);
+      },
+      child: Scaffold(
+        body: _getUI(context),
+      ),
     );
   }
 

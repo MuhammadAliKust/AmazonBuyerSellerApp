@@ -10,6 +10,7 @@ import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/boldCaption.dart';
 import 'package:amazon_sale_app/presentation/elements/bottomNavBar.dart';
 import 'package:amazon_sale_app/presentation/elements/dynamicFontSize.dart';
+import 'package:amazon_sale_app/presentation/elements/flushBar.dart';
 import 'package:amazon_sale_app/presentation/elements/getReviewSS.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
@@ -123,6 +124,13 @@ class _SubmittedReviewState extends State<SubmittedReview> {
                   AppButton(
                       text: "Submit",
                       onPressed: () async {
+                        if (_file == null) {
+                          getFlushBar(context,
+                              title: "Kindly attach screenshot.",
+                              icon: Icons.info_outline,
+                              color: Colors.blue);
+                          return;
+                        }
                         isLoading = true;
                         setState(() {});
                         _uploadFileServices

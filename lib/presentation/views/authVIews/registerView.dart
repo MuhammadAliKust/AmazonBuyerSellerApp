@@ -7,6 +7,7 @@ import 'package:amazon_sale_app/presentation/elements/appHeading.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/auth_text_field.dart';
 import 'package:amazon_sale_app/presentation/elements/dialog.dart';
+import 'package:amazon_sale_app/presentation/elements/flushBar.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/horizontal_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/navigation_dialog.dart';
@@ -16,6 +17,7 @@ import 'package:amazon_sale_app/presentation/views/authVIews/login.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +39,8 @@ class _RegisterViewState extends State<RegisterView> {
   String countryCode;
   String countryName;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,137 +56,158 @@ class _RegisterViewState extends State<RegisterView> {
       isLoading: signUp.status == SignUpStatus.Registering,
       progressIndicator: CircularProgressIndicator(),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            VerticalSpace(70),
-            Center(child: Image.asset('assets/images/login.png')),
-            VerticalSpace(40),
-            AppHeadings("Register Here"),
-            VerticalSpace(50),
-            TextFieldLabel("User Name"),
-            VerticalSpace(10),
-            AuthTextField(
-              label: "John Doe",
-              controller: _userNameController,
-              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
-              icon: Icons.person,
-            ),
-            VerticalSpace(17),
-            TextFieldLabel("Email"),
-            VerticalSpace(10),
-            AuthTextField(
-              label: "xyz@mail.com",
-              controller: _emailController,
-              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
-              icon: Icons.email,
-            ),
-            VerticalSpace(17),
-            TextFieldLabel("Password"),
-            VerticalSpace(10),
-            AuthTextField(
-              label: "Password",
-              controller: _pwdController,
-              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
-              icon: Icons.vpn_key,
-            ),
-            VerticalSpace(17),
-            TextFieldLabel("Select Country"),
-            VerticalSpace(10),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
-              child: InkWell(
-                onTap: () {
-                  showCountryPicker(
-                    context: context,
-                    //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                    exclude: <String>['KN', 'MF'],
-                    //Optional. Shows phone code before the country name.
-                    showPhoneCode: true,
-                    onSelect: (Country country) {
-                      countryCode = country.phoneCode;
-                      countryName = country.displayNameNoCountryCode;
-                      setState(() {});
-                      print('Select country: ${country.displayName}');
-                    },
-                  );
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: FrontEndConfigs.appBaseColor,
-                      )),
-                  height: 60,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0),
-                        child: Text(
-                          countryName == null ? 'Select Country' : countryName,
-                          style: TextStyle(
-                              color: FrontEndConfigs.appBaseColor,
-                              fontSize: 16),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.flag,
-                            color: FrontEndConfigs.appBaseColor,
-                            size: 20,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              VerticalSpace(70),
+              Center(child: Image.asset('assets/images/login.png')),
+              VerticalSpace(40),
+              AppHeadings("Register Here"),
+              VerticalSpace(50),
+              TextFieldLabel("User Name"),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "John Doe",
+                controller: _userNameController,
+                validator: (val) =>
+                    val.isEmpty ? "Field cannot be empty" : null,
+                icon: Icons.person,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel("Email"),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "xyz@mail.com",
+                controller: _emailController,
+                validator: (val) =>
+                    val.isEmpty ? "Field cannot be empty" : null,
+                icon: Icons.email,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel("Password"),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Password",
+                controller: _pwdController,
+                validator: (val) =>
+                    val.isEmpty ? "Field cannot be empty" : null,
+                icon: Icons.vpn_key,
+              ),
+              VerticalSpace(17),
+              TextFieldLabel("Select Country"),
+              VerticalSpace(10),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                child: InkWell(
+                  onTap: () {
+                    showCountryPicker(
+                      context: context,
+                      //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
+                      exclude: <String>['KN', 'MF'],
+                      //Optional. Shows phone code before the country name.
+                      showPhoneCode: true,
+                      onSelect: (Country country) {
+                        countryCode = country.phoneCode;
+                        countryName = country.displayNameNoCountryCode;
+                        setState(() {});
+                        print('Select country: ${country.displayName}');
+                      },
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: FrontEndConfigs.appBaseColor,
+                        )),
+                    height: 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Text(
+                            countryName == null
+                                ? 'Select Country'
+                                : countryName,
+                            style: TextStyle(
+                                color: FrontEndConfigs.appBaseColor,
+                                fontSize: 16),
                           ),
-                          HorizontalSpace(15)
-                        ],
-                      )
-                    ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.flag,
+                              color: FrontEndConfigs.appBaseColor,
+                              size: 20,
+                            ),
+                            HorizontalSpace(15)
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            VerticalSpace(17),
-            TextFieldLabel("Phone Number"),
-            VerticalSpace(10),
-            _getPhoneField(),
-            VerticalSpace(17),
-            TextFieldLabel("Paypal"),
-            VerticalSpace(10),
-            AuthTextField(
-              label: "Paste your PayPal Account",
-              controller: _payPalController,
-              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
-            ),
-            VerticalSpace(17),
-            TextFieldLabel("Payooner"),
-            VerticalSpace(10),
-            AuthTextField(
-              label: "Paste your PayPal Account",
-              controller: _payoneerController,
-              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
-            ),
-            if (isSeller) VerticalSpace(17),
-            if (isSeller) TextFieldLabel("Amazon"),
-            if (isSeller) VerticalSpace(10),
-            if (isSeller)
+              VerticalSpace(17),
+              TextFieldLabel("Phone Number"),
+              VerticalSpace(10),
+              _getPhoneField(),
+              VerticalSpace(17),
+              TextFieldLabel("Paypal"),
+              VerticalSpace(10),
               AuthTextField(
-                label: "Paste your Amazon Account Link..",
-                controller: _amazonController,
+                label: "Paste your PayPal Account",
+                controller: _payPalController,
                 validator: (val) =>
                     val.isEmpty ? "Field cannot be empty" : null,
               ),
-            VerticalSpace(17),
-            _getRadioButtonRow(),
-            VerticalSpace(24),
-            AppButton(
-                text: "Register",
-                onPressed: () {
-                  _signUpUser(context: context, signUp: signUp, user: user);
-                }),
-            ToggleView(false)
-          ],
+              VerticalSpace(17),
+              TextFieldLabel("Payooner"),
+              VerticalSpace(10),
+              AuthTextField(
+                label: "Paste your PayPal Account",
+                controller: _payoneerController,
+                validator: (val) =>
+                    val.isEmpty ? "Field cannot be empty" : null,
+              ),
+              if (isSeller) VerticalSpace(17),
+              if (isSeller) TextFieldLabel("Amazon"),
+              if (isSeller) VerticalSpace(10),
+              if (isSeller)
+                AuthTextField(
+                  label: "Paste your Amazon Account Link..",
+                  controller: _amazonController,
+                  validator: (val) =>
+                      val.isEmpty ? "Field cannot be empty" : null,
+                ),
+              VerticalSpace(17),
+              _getRadioButtonRow(),
+              VerticalSpace(24),
+              AppButton(
+                  text: "Register",
+                  onPressed: () {
+                    if (!_formKey.currentState.validate()) {
+                      return;
+                    }
+                    if (countryName == null) {
+                      getFlushBar(context,
+                          title: "Kindly select country",
+                          icon: Icons.info_outline,
+                          color: Colors.blue);
+                      return;
+                    }
+
+                    _signUpUser(context: context, signUp: signUp, user: user);
+                  }),
+              ToggleView(false)
+            ],
+          ),
         ),
       ),
     );
@@ -260,6 +285,12 @@ class _RegisterViewState extends State<RegisterView> {
                   child: TextFormField(
                     controller: _phoneController,
                     cursorColor: FrontEndConfigs.appBaseColor,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
+                    keyboardType: TextInputType.number,
+                    validator: (val) =>
+                        val.isEmpty ? "Field cannot be empty" : null,
                     decoration: InputDecoration(
                       hintText: "Phone Number",
                       hintStyle: TextStyle(color: FrontEndConfigs.appBaseColor),
@@ -309,8 +340,8 @@ class _RegisterViewState extends State<RegisterView> {
         .then((value) {
       if (signUp.status == SignUpStatus.Registered) {
         showNavigationDialog(context,
-            message: "thanks_for_register",
-            buttonText: "go_to_login", navigation: () {
+            message: "Thanks for registration.",
+            buttonText: "Go to Login", navigation: () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginView()));
         }, secondButtonText: "", showSecondButton: false);

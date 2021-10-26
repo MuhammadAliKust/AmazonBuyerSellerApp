@@ -9,16 +9,19 @@ import 'package:amazon_sale_app/presentation/elements/appBar.dart';
 import 'package:amazon_sale_app/presentation/elements/appDrawer.dart';
 import 'package:amazon_sale_app/presentation/elements/app_button.dart';
 import 'package:amazon_sale_app/presentation/elements/dynamicFontSize.dart';
+import 'package:amazon_sale_app/presentation/elements/flushBar.dart';
 import 'package:amazon_sale_app/presentation/elements/headerEarningRow.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/textFieldLable.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class AddMoneyView extends StatefulWidget {
   @override
@@ -81,6 +84,13 @@ class _AddMoneyViewState extends State<AddMoneyView> {
                 AppButton(
                     text: "Submit",
                     onPressed: () {
+                      if (_file == null) {
+                        getFlushBar(context,
+                            title: "Kindly attach payment screenshot.",
+                            icon: Icons.info_outline,
+                            color: Colors.blue);
+                        return;
+                      }
                       isLoading = true;
                       setState(() {});
                       _uploadFileServices
@@ -103,7 +113,7 @@ class _AddMoneyViewState extends State<AddMoneyView> {
                               builder: (ctxtDialog) {
                                 return CupertinoAlertDialog(
                                   title: Text(
-                                    "message",
+                                    "Message",
                                     style: TextStyle(color: Colors.green[900]),
                                   ),
                                   content: Text(
@@ -157,7 +167,12 @@ class _AddMoneyViewState extends State<AddMoneyView> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onLongPress: () {
+                  FlutterClipboard.copy(text).then((value) {
+                    Toast.show("Text Copied", context,
+                        duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+                  });
+                },
                 child: Icon(
                   Icons.copy,
                   color: FrontEndConfigs.appBaseColor,

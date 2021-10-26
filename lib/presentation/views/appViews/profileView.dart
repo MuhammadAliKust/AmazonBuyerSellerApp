@@ -5,12 +5,16 @@ import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/horizontal_sized_box.dart';
 import 'package:amazon_sale_app/presentation/elements/profileTile.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/profile_view.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class ProfileView extends StatelessWidget {
   File _image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +43,7 @@ class ProfileView extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: Column(
                 children: [
-                  _buildDP(),
+                  _buildDP(context),
                   VerticalSpace(10),
                   Text(
                     user.getUserDetails.userName,
@@ -69,25 +73,32 @@ class ProfileView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      child: Card(
-                        elevation: 5,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14.0, vertical: 8),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.edit,
-                                color: FrontEndConfigs.appBaseColor,
-                                size: 16,
-                              ),
-                              HorizontalSpace(6),
-                              Text(
-                                "Edit",
-                                style: TextStyle(
-                                    color: FrontEndConfigs.appBaseColor),
-                              )
-                            ],
+                      child: InkWell(
+                        onTap: () {
+                          pushNewScreen(context,
+                              screen: EditProfileView(user.getUserDetails),
+                              withNavBar: false);
+                        },
+                        child: Card(
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  color: FrontEndConfigs.appBaseColor,
+                                  size: 16,
+                                ),
+                                HorizontalSpace(6),
+                                Text(
+                                  "Edit",
+                                  style: TextStyle(
+                                      color: FrontEndConfigs.appBaseColor),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -127,7 +138,8 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  _buildDP() {
+  _buildDP(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return Stack(
       children: [
         Container(
@@ -140,41 +152,20 @@ class ProfileView extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100),
-            child: _image == null
-                ? Image.asset('assets/images/user.png')
-                : Image.file(
-                    _image,
-                    fit: BoxFit.cover,
-                  ),
-          ),
-        ),
-        Positioned.fill(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Align(
-              alignment: Alignment.bottomRight,
-              child: InkWell(
-                onTap: () {
-                  // getImage(true);
-                },
-                child: Container(
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                    size: 17,
-                  ),
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 2),
-                      color: FrontEndConfigs.appBaseColor,
-                      shape: BoxShape.circle),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: user.getUserDetails.dp ?? '',
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Image.asset(
+                  'assets/images/placeholderUser.png',
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
-          ],
-        ))
+          ),
+        ),
       ],
     );
   }

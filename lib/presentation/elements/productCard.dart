@@ -2,6 +2,7 @@ import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/infrastructure/models/product_model.dart';
 import 'package:amazon_sale_app/infrastructure/services/product_services.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,6 +44,7 @@ class ProductCard extends StatelessWidget {
                         child: CachedNetworkImage(
                           imageUrl: productModel.productImage,
                           height: 120,
+                          width: double.infinity,
                           fit: BoxFit.fill,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => Center(
@@ -182,7 +184,15 @@ class ProductCard extends StatelessWidget {
               color: FrontEndConfigs.appBaseColor,
             ),
             onSelected: (value) {
-              if (value == 2) {
+              if (value == 1) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreatePost(
+                              productModel: productModel,
+                              isUpdateView: true,
+                            )));
+              } else if (value == 2) {
                 showDialog(
                     barrierDismissible: false,
                     context: (context),

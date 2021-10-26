@@ -73,8 +73,12 @@ class _MyProductsState extends State<MyProducts> {
             AppButton(
                 text: "Create Post",
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CreatePost()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreatePost(
+                                productModel: ProductModel(),
+                              )));
                 }),
             VerticalSpace(20),
           ],

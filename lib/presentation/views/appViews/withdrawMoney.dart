@@ -58,6 +58,7 @@ class _WithdrawMoneyViewState extends State<WithdrawMoneyView> {
                 AuthTextField(
                   label: "Amount",
                   controller: _amountController,
+                  isNumberField: true,
                   validator: (val) =>
                       val.isEmpty ? "Field cannot be empty." : null,
                   icon: Icons.attach_money_outlined,
@@ -91,6 +92,7 @@ class _WithdrawMoneyViewState extends State<WithdrawMoneyView> {
                             title: "Kindly select account type.",
                             icon: Icons.info_outline,
                             color: Colors.blue);
+                        return;
                       }
                       if (int.parse(_amountController.text) > 0) {
                         getFlushBar(context,

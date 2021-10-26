@@ -1,5 +1,6 @@
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AuthTextField extends StatelessWidget {
   final String label;
@@ -7,12 +8,14 @@ class AuthTextField extends StatelessWidget {
   final Function(String) validator;
   final IconData icon;
   final bool isRequireLessPadding;
+  final bool isNumberField;
 
   AuthTextField(
       {@required this.label,
       @required this.controller,
       @required this.validator,
       this.isRequireLessPadding = false,
+      this.isNumberField = false,
       this.icon});
 
   @override
@@ -26,6 +29,10 @@ class AuthTextField extends StatelessWidget {
           horizontal: isRequireLessPadding ? 18 : 30.0, vertical: 4),
       child: TextFormField(
         controller: controller,
+        inputFormatters: [
+          if (isNumberField) FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+        ],
+        keyboardType: isNumberField ? TextInputType.number : TextInputType.text,
         validator: validator,
         cursorColor: FrontEndConfigs.appBaseColor,
         style: TextStyle(color: FrontEndConfigs.appBaseColor),

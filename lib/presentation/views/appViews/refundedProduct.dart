@@ -76,6 +76,7 @@ class RefundedProduct extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Text(
                     productModel.description ?? "N/A",
+                    textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 14),
                   ),
                 ),

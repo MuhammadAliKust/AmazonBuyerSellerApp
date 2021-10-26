@@ -74,8 +74,7 @@ class AuthServices with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       Provider.of<ErrorString>(context, listen: false)
           .saveErrorString(e.message);
-      Provider.of<SignUpBusinessLogic>(context, listen: false)
-          .setState(SignUpStatus.Failed);
+      setState(Status.Unauthenticated);
       return null;
     }
   }

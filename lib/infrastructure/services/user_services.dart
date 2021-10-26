@@ -26,4 +26,24 @@ class UserServices {
         .snapshots()
         .map((snap) => UserModel.fromJson(snap.data()));
   }
+
+  ///Edit User Details
+  Future<void> editUserData(BuildContext context,
+      {UserModel model, String uid}) async {
+    Provider.of<AppState>(context, listen: false)
+        .stateStatus(StateStatus.IsBusy);
+    DocumentReference docRef =
+        FirebaseFirestore.instance.collection('amazonUsersCollection').doc(uid);
+    await docRef.update({
+      'dp': model.dp,
+      'userName': model.userName,
+      'paypal': model.paypal,
+      'payoneer': model.payoneer,
+      'amazon': model.amazon,
+      'country': model.country,
+      'number': model.number,
+    });
+    Provider.of<AppState>(context, listen: false)
+        .stateStatus(StateStatus.IsFree);
+  }
 }

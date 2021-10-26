@@ -23,6 +23,8 @@ class _ForgotPasswordViewsState extends State<ForgotPasswordViews> {
 
   bool isLoading = false;
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,31 +36,37 @@ class _ForgotPasswordViewsState extends State<ForgotPasswordViews> {
     var auth = Provider.of<AuthServices>(context);
     return LoadingOverlay(
       isLoading: auth.status == Status.Authenticating,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          VerticalSpace(100),
-          Center(child: Image.asset('assets/images/forgotPwd.png')),
-          VerticalSpace(40),
-          AppHeadings("Forgot Password"),
-          VerticalSpace(60),
-          TextFieldLabel("Email"),
-          VerticalSpace(10),
-          AuthTextField(
-            label: "Enter your Email",
-            controller: _emailController,
-            validator: (val) {},
-          ),
-          VerticalSpace(25),
-          AppButton(
-              text: "Send Password Reset Link",
-              onPressed: () {
-                isLoading = true;
-                setState(() {});
-                _forgotPassword(context);
-              })
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            VerticalSpace(100),
+            Center(child: Image.asset('assets/images/forgotPwd.png')),
+            VerticalSpace(40),
+            AppHeadings("Forgot Password"),
+            VerticalSpace(60),
+            TextFieldLabel("Email"),
+            VerticalSpace(10),
+            AuthTextField(
+              label: "Enter your Email",
+              controller: _emailController,
+              validator: (val) => val.isEmpty ? "Field cannot be empty" : null,
+            ),
+            VerticalSpace(25),
+            AppButton(
+                text: "Send Password Reset Link",
+                onPressed: () {
+                  if (!_formKey.currentState.validate()) {
+                    return;
+                  }
+                  isLoading = true;
+                  setState(() {});
+                  _forgotPassword(context);
+                })
+          ],
+        ),
       ),
     );
   }

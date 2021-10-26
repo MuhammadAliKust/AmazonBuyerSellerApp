@@ -103,17 +103,24 @@ class ProductServices {
   }
 
   ///Update Product
-  Future<void> updateProduct(BuildContext context,
-      {String categoryID,
-      String categoryName,
-      String categoryImage,
-      String chCategory}) async {
+  Future<void> updateProduct(
+    BuildContext context, {
+    ProductModel model,
+  }) async {
     Provider.of<AppState>(context, listen: false)
         .stateStatus(StateStatus.IsBusy);
-    await _productCollection.doc(categoryID).update({
-      'categoryName': categoryName,
-      'categoryImage': categoryImage,
-      'categoryNameChinese': chCategory
+    await _productCollection.doc(model.docId).update({
+      'keyword': model.keyword,
+      'link': model.link,
+      'productImage': model.productImage,
+      'price': model.price,
+      'reviewType': model.reviewType,
+      'totalReview': model.totalReview,
+      'store': model.store,
+      'description': model.description,
+      'day': model.day,
+      'category': model.category,
+      'country': model.country,
     });
     Provider.of<AppState>(context, listen: false)
         .stateStatus(StateStatus.IsFree);

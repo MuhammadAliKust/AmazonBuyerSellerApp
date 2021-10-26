@@ -2,7 +2,6 @@ import 'package:amazon_sale_app/presentation/elements/bottomNavBar.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/addMoney.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/buyerProductScreen.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/chat.dart';
-import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/howToUse.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/notifications.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/orderedProductScreen.dart';
@@ -34,8 +33,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => BottomNavBar());
       case Routes.ADD_MONEY_ROUTE:
         return MaterialPageRoute(builder: (_) => AddMoneyView());
-      case Routes.CREATE_POST_ROUTE:
-        return MaterialPageRoute(builder: (_) => CreatePost());
+      // case Routes.CREATE_POST_ROUTE:
+      //   return MaterialPageRoute(builder: (_) => CreatePost());
       case Routes.BUYER_PRODUCT_ROUTE:
         return MaterialPageRoute(builder: (_) => BuyerProductScreen());
       case Routes.CHAT_ROUTE:

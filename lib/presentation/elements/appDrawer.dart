@@ -20,6 +20,7 @@ import 'heigh_sized_box.dart';
 class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -63,7 +64,7 @@ class AppDrawer extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 8.0),
-                  child: Text('https://www.amazon......'),
+                  child: Text(user.getUserDetails.amazon),
                 )
               ],
             ),
@@ -74,10 +75,13 @@ class AppDrawer extends StatelessWidget {
                       duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                 });
               },
-              child: Icon(
-                Icons.copy,
-                size: 16,
-                color: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.copy,
+                  size: 16,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
