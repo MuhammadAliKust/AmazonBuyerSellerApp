@@ -116,11 +116,12 @@ class ProfileView extends StatelessWidget {
                 value: user.getUserDetails.paypal,
                 iconString: "assets/icons/paypal.png",
               ),
-              ProfileTile(
-                label: "Amazon Profile Link:",
-                value: user.getUserDetails.amazon,
-                iconString: "assets/icons/amazon.png",
-              ),
+              if (user.getUserDetails.isSeller)
+                ProfileTile(
+                  label: "Amazon Profile Link:",
+                  value: user.getUserDetails.amazon,
+                  iconString: "assets/icons/amazon.png",
+                ),
               ProfileTile(
                 label: "Phone Number:",
                 value: user.getUserDetails.number,

@@ -1,13 +1,16 @@
+import 'package:amazon_sale_app/application/userProvider.dart';
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/infrastructure/models/product_model.dart';
 import 'package:amazon_sale_app/infrastructure/services/product_services.dart';
 import 'package:amazon_sale_app/presentation/elements/heigh_sized_box.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/createPost.dart';
 import 'package:amazon_sale_app/presentation/views/appViews/myProducts.dart';
+import 'package:amazon_sale_app/presentation/views/appViews/profileView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel productModel;
@@ -18,6 +21,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return Container(
       height: 240,
       child: Card(
@@ -55,55 +59,57 @@ class ProductCard extends StatelessWidget {
                               Icon(Icons.error),
                         ),
                       ),
-                      // Positioned(
-                      //   top: 10,
-                      //   child: Container(
-                      //     height: 33,
-                      //     width: 54,
-                      //     decoration: BoxDecoration(
-                      //         color: FrontEndConfigs.appBaseColor,
-                      //         borderRadius: BorderRadius.only(
-                      //             topRight: Radius.circular(5),
-                      //             bottomRight: Radius.circular(5))),
-                      //     child: Center(
-                      //       child: Text(
-                      //         "Sale",
-                      //         style:
-                      //             TextStyle(fontSize: 14, color: Colors.white),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Positioned.fill(
-                      //   top: 10,
-                      //   right: 10,
-                      //   child: Align(
-                      //     alignment: Alignment.topRight,
-                      //     child: InkWell(
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => ProfileView()));
-                      //       },
-                      //       child: Container(
-                      //         height: 23,
-                      //         width: 28,
-                      //         decoration: BoxDecoration(
-                      //             color: Color(0xff812831),
-                      //             borderRadius: BorderRadius.all(
-                      //               Radius.circular(5),
-                      //             )),
-                      //         child: Center(
-                      //           child: Icon(
-                      //             Icons.person,
-                      //             size: 16,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      if (!user.getUserDetails.isSeller)
+                        Positioned(
+                          top: 10,
+                          child: Container(
+                            height: 33,
+                            width: 54,
+                            decoration: BoxDecoration(
+                                color: FrontEndConfigs.appBaseColor,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(5),
+                                    bottomRight: Radius.circular(5))),
+                            child: Center(
+                              child: Text(
+                                "Sale",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (!user.getUserDetails.isSeller)
+                        Positioned.fill(
+                          top: 10,
+                          right: 10,
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProfileView()));
+                              },
+                              child: Container(
+                                height: 23,
+                                width: 28,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff812831),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(5),
+                                    )),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

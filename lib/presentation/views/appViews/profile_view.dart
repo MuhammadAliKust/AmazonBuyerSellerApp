@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:amazon_sale_app/application/userProvider.dart';
 import 'package:amazon_sale_app/configurations/frontEndConfigs.dart';
 import 'package:amazon_sale_app/infrastructure/models/user_model.dart';
 import 'package:amazon_sale_app/infrastructure/services/uploadFileServices.dart';
@@ -18,6 +19,7 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileView extends StatefulWidget {
   final UserModel userModel;
@@ -77,6 +79,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   Widget _getUI(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     return LoadingOverlay(
       isLoading: isLoading,
       child: SingleChildScrollView(
@@ -148,16 +151,22 @@ class _EditProfileViewState extends State<EditProfileView> {
                     val.isEmpty ? "Field cannot be empty" : null,
                 isRequireLessPadding: true,
               ),
-              VerticalSpace(10),
-              TextFieldLabel("Amazon Profile Link", isRequireLessPadding: true),
-              VerticalSpace(10),
-              AuthTextField(
-                label: "",
-                controller: _amazonController,
-                validator: (val) =>
-                    val.isEmpty ? "Field cannot be empty" : null,
-                isRequireLessPadding: true,
-              ),
+              if (user.getUserDetails.isSeller)
+                Column(
+                  children: [
+                    VerticalSpace(10),
+                    TextFieldLabel("Amazon Profile Link",
+                        isRequireLessPadding: true),
+                    VerticalSpace(10),
+                    AuthTextField(
+                      label: "",
+                      controller: _amazonController,
+                      validator: (val) =>
+                          val.isEmpty ? "Field cannot be empty" : null,
+                      isRequireLessPadding: true,
+                    ),
+                  ],
+                ),
               VerticalSpace(10),
               TextFieldLabel("Country", isRequireLessPadding: true),
               VerticalSpace(10),

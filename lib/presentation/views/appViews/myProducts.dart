@@ -58,32 +58,38 @@ class _MyProductsState extends State<MyProducts> {
 
   @override
   Widget build(BuildContext context) {
+    var user = Provider.of<UserProvider>(context);
     PopupMenu.context = context;
     return Scaffold(
       appBar:
           customAppBar(context, title: "Home", doestNotshow: widget.fromNavbar),
       body: _getUI(context),
       drawer: !widget.fromNavbar ? AppDrawer() : null,
-      bottomNavigationBar: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            VerticalSpace(20),
-            AppButton(
-                text: "Create Post",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreatePost(
-                                productModel: ProductModel(),
-                              )));
-                }),
-            VerticalSpace(20),
-          ],
-        ),
-      ),
+      bottomNavigationBar: user.getUserDetails.isSeller
+          ? Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  VerticalSpace(20),
+                  AppButton(
+                      text: "Create Post",
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreatePost(
+                                      productModel: ProductModel(),
+                                    )));
+                      }),
+                  VerticalSpace(20),
+                ],
+              ),
+            )
+          : Container(
+              height: 1,
+              width: 1,
+            ),
     );
   }
 
@@ -122,7 +128,9 @@ class _MyProductsState extends State<MyProducts> {
         ),
         VerticalSpace(10),
         StreamProvider.value(
-          value: _productServices.streamAllProducts(user.getUserDetails.uid),
+          value: user.getUserDetails.isSeller
+              ? _productServices.streamAllProducts(user.getUserDetails.uid)
+              : _productServices.streamAllProductsForBuyer(),
           builder: (context, child) {
             return Expanded(
               child: context.watch<List<ProductModel>>() == null

@@ -54,37 +54,44 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 pushNewScreen(context, screen: MyProducts());
               }),
-          Divider(),
-          ListTile(
-            title: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.share,
-                  color: Colors.black,
+          if (user.getUserDetails.isSeller)
+            Column(
+              children: [
+                Divider(),
+                ListTile(
+                  title: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.share,
+                        color: Colors.black,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(user.getUserDetails.amazon),
+                      )
+                    ],
+                  ),
+                  trailing: InkWell(
+                    onTap: () {
+                      FlutterClipboard.copy('https://www.amazon......')
+                          .then((value) {
+                        Toast.show("Copied", context,
+                            duration: Toast.LENGTH_SHORT,
+                            gravity: Toast.BOTTOM);
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.copy,
+                        size: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Text(user.getUserDetails.amazon),
-                )
               ],
             ),
-            trailing: InkWell(
-              onTap: () {
-                FlutterClipboard.copy('https://www.amazon......').then((value) {
-                  Toast.show("Copied", context,
-                      duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.copy,
-                  size: 16,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
           Divider(),
           _createDrawerItem(
               icon: Icons.play_arrow,

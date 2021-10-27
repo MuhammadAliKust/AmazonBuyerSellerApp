@@ -26,6 +26,15 @@ class ProductServices {
             event.docs.map((e) => ProductModel.fromJson(e.data())).toList());
   }
 
+  ///Get Product for Buyer
+  Stream<List<ProductModel>> streamAllProductsForBuyer() {
+    return _productCollection
+        // .where('uid', isEqualTo: uid) ///TODO: Add Country Condition
+        .snapshots()
+        .map((event) =>
+            event.docs.map((e) => ProductModel.fromJson(e.data())).toList());
+  }
+
   ///Get Ordered Product
   Stream<List<ProductModel>> streamOrderedProduct(String uid) {
     return _productCollection
